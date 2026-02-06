@@ -48,58 +48,6 @@
 
 #>
 
-Set-StrictMode -Version 2.0
-
-#Global Variables
-$Error.Clear()
-$Global:WriteErrorCount = 0
-
-
-<#################
-# Function Examples
-#################
-function Simple_Binding
-{
-		param
-	(
-		# 	param Definitions
-	)
-
-}
-
-<#
-function CmdLet_Example
-{
-	<#
-		.SYNOPSIS
-
-		.DESCRIPTION
-
-		.EXAMPLE
-
-		.LINK
-
-		.NOTES
-			Author: Rwhicks@AlliedTechUsa.com
-			Copyright 2025 Allied Technology Services L.L.C.
-
-		.REVISION
-			1.0		06/07/2025		Rwhicks@AlliedTechUsa.com
-	>
-
-	[cmdletbinding()]
-	[OutputType([string])]
-
-	param
-	(
-
-	)
-
-	begin {	Write-HostLog "`nBegin: $( $MyInvocation.Mycommand )`n" }
-
-	process {} # required
-}
-#>
 
 function Get-AppxExePath
 {
@@ -154,6 +102,7 @@ function Get-AppxExePath
 				}
 
 				[System.Version] $Newest = '0.0'
+
 				foreach ( $Item in $TheList.Keys )
 				{
 					[System.Version] $ItemVersion = [System.Version] $Item
@@ -213,7 +162,7 @@ function Get-AppInstallPathList
 	begin
 	{
 		Write-HostLog "`nBegin: $( $MyInvocation.Mycommand )`n"
- }
+	}
 
 	process
 	{
@@ -297,9 +246,9 @@ function Stop-RunningProcess
 			DO
 			{
 				if ( $ProcessID.HasExited )
-    {
+				{
 					Continue
-    }
+				}
 
 				Start-Sleep( 1 )
 				$Count++
@@ -314,9 +263,9 @@ function Stop-RunningProcess
 				DO
 				{
 					if ( $ProcessID.HasExited )
-     {
+					{
 						Continue
-     }
+					}
 
 					Start-Sleep( 1 )
 					$Count++
@@ -403,10 +352,13 @@ function Get-AppVersion
 
 			[Object[]] $Rslt_2 = $null
 
-			$Rslt_1 | ForEach-Object { if ( [bool]( Get-member -Name DisplayName -InputObject $_ ))
+			$Rslt_1 | ForEach-Object
+			{
+				if ( [bool]( Get-member -Name DisplayName -InputObject $_ ))
 				{
 					$Rslt_2 += $_
-				} }
+				}
+			}
 
 			$Rslt_2 | Where-Object { $null -ne $_.DisplayName -and $_.DisplayName -like $filter } | Select-Object $properties
 		}
@@ -416,7 +368,7 @@ function Get-AppVersion
 		if ( $ComputerName )
 		{
 			$splat['ComputerName'] = $ComputerName
-  }
+		}
 
 		return ( Invoke-Command -ScriptBlock $ScriptBlock -ArgumentList $regpath, $filter, $properties @splat )
 	}
@@ -817,7 +769,7 @@ function Write-WarningHostLog
 
 	Begin
 	{
- }
+	}
 
 	Process
 	{
@@ -880,7 +832,7 @@ function Write-ErrorHostLog
 
 	Begin
 	{
- }
+	}
 
 	Process
 	{
@@ -1058,7 +1010,6 @@ Function Test-IsFolderEmpty
 
 
 
-
 #################
 # 				#
 #################
@@ -1102,7 +1053,7 @@ function Remove-EmptyFolders
 			if ( $IsContinue)
 			{
 				Continue
-   }
+			}
 
 			if ( Test-IsFolderEmpty -Path $Dir.FullName  )
 			{
@@ -1137,7 +1088,6 @@ function Remove-EmptyFolders
 
 
 
-
 #################
 # Event Timer that prints dots on the screen to show progress
 #################
@@ -1169,6 +1119,43 @@ function New-EventTimerDots
 
 
 
+
+#########################################################
+# Corp.Ercr.Co Self Signed Signature                    #
+#########################################################
+
+# SIG # Begin signature block
+# MIIFkQYJKoZIhvcNAQcCoIIFgjCCBX4CAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
+# gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
+# AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUb3LtfPV8xDL9nYis/W4A5F+c
+# TAOgggMgMIIDHDCCAgSgAwIBAgIQeUk4gP/eEbpEIs8DLHOpUTANBgkqhkiG9w0B
+# AQsFADAmMSQwIgYDVQQDDBtBVFMtTExDIFNpZ25pbmcgQ2VydGlmaWNhdGUwHhcN
+# MTkwNjI2MjMyNDA2WhcNMjAwNjI2MjM0NDA2WjAmMSQwIgYDVQQDDBtBVFMtTExD
+# IFNpZ25pbmcgQ2VydGlmaWNhdGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+# AoIBAQDIk61RpAZyhS0oV1rBKW765wpH+uGWB2a7pNr+tYxgRFhE56AiOGkqEcDN
+# vQQ0lDjfbl5DROOoi10vkesw1Tgntr31oCOfjzDHz5lrdnt5FoMtCzf/OZuM/Q++
+# 7cnmT9fFxrns0rsX/qgjyhPgCwxtw8vXh3YisnfYMMoPpytE5KyKPswL4nU1OtWG
+# Y+SObPd9B1axolHYFk5m84XWu92g7dG7x8chMhoT+D4fKSGYehLXxCM+MO+vCIce
+# oGD7mhVC4UxV2oUVPXq7afPUfQGJw8hde4GEGTYmF0768PXPRMS8Y1h4D9o/paLr
+# QK172+8HGKJUsQqof9pX2gWFp6KhAgMBAAGjRjBEMA4GA1UdDwEB/wQEAwIHgDAT
+# BgNVHSUEDDAKBggrBgEFBQcDAzAdBgNVHQ4EFgQUKhnZjuekbhe4K05hhGYObOZ3
+# K1swDQYJKoZIhvcNAQELBQADggEBACv6hu8Xb+SGueUCgGL+FVk7VHffTDQjw6Ly
+# V86JKvNJGuuIr0g+9GFUE2gyppJFOQQyT1DYSRJQfwI0ry/OxdKwqUDs+P/fOjkK
+# iPz+MY3P+FKvSOToAxV1cDnqjlheNYcohy+5OcjbE3TruS/3aFMqKraCX71YqU4x
+# CS94fo4awj/r0FDISXOCnTaX2v5EirsS9VBq8SXs5h5rAaT3yf01c5eGvYBJYEq4
+# YW1agymK0elqckYLE9B8n5Te2htx7ELtVt4affxWb1KVhbipHMI8uTobOkBxPMw8
+# rF/pNLSFc5SwSuR4dHp30gSCHXOWRPlpWRd6hsjRa0oQUE5iScQxggHbMIIB1wIB
+# ATA6MCYxJDAiBgNVBAMMG0FUUy1MTEMgU2lnbmluZyBDZXJ0aWZpY2F0ZQIQeUk4
+# gP/eEbpEIs8DLHOpUTAJBgUrDgMCGgUAoHgwGAYKKwYBBAGCNwIBDDEKMAigAoAA
+# oQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEEAYI3AgELMQ4w
+# DAYKKwYBBAGCNwIBFTAjBgkqhkiG9w0BCQQxFgQU5rpCisJHj/6bE8RlT+rL1rT9
+# CzwwDQYJKoZIhvcNAQEBBQAEggEAh0/qKCcOWrKvKFi9wghN5T4v6SFpaSKdcRVh
+# r1AZu6+5/PGRyvG0o0b4OBovbb/M+bF51N36fb03cm5abVHaVHuJ/52HBLKTJEpM
+# YK63ItRWHBcw7+EWa7C0vkknO83ZZCDHup4FeGIJS75o6+/fuxjfjeKaBGOIqM68
+# VV5quM6U8dIP6CuKuwD3vMdKK4fLxNrrMfOLismJ/iWxpRhsobaaMB7nUXiSTcjf
+# bpkPV8Vov6XU1HbaF665dWdhqEmOJ8Kg4m3fojrtmtNcqDTQNa7W7d9NVrvz2xy0
+# kE52xJp6kmOOvBtnca+vZb87+EOSthVyKe9IZ89vD8RsxvXUMg==
+# SIG # End signature block
 
 
 
